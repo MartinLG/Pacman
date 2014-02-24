@@ -10,6 +10,9 @@ namespace Pacman
     {
         static void Main(string[] args)
         {
+            Labyrinthe laby = new Labyrinthe();
+            laby.printLaby();
+            Console.ReadKey(true);
         }
     }
 }

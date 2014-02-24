@@ -8,19 +8,24 @@ namespace Pacman
 {
     class Labyrinthe
     {
-        private PCase[,] laby = new PCase[20,20];
+        private PCase[,] laby = new PCase[20,21];
 
-        Labyrinthe(){
+        public Labyrinthe(){
             for(int i=0; i<20; i++){
                 for(int j=0; j<20; j++){
-                    if(i==0 && j!=0){
+                    if(i==0 || i==19){
+                        laby[i,j] = new PCase();
                         laby[i,j].setStatement("horizontal");
-                    }else if(i!=0 && j==0){
+                    }else if(j==0 || j == 19){
+                        laby[i,j] = new PCase();
                         laby[i,j].setStatement("vertical");
                     }else{
+                        laby[i,j] = new PCase();
                         laby[i,j].setStatement("toeat");
                     }
                 }
+                laby[i,20] = new PCase();
+                laby[i, 20].setStatement("nextLine");
             }
             //laby[10, 10].setStatement("pacman");
         }
@@ -38,6 +43,19 @@ namespace Pacman
             }
             else {
                 return false;
+            }
+        }
+
+        public void setCharacterOnCase(Character character, int x, int y) { 
+            
+        }
+
+        public void printLaby() {
+            for (int i = 0; i < 20; i++)
+            {
+                for (int j = 0; j < 21; j++) {
+                    Console.Write(laby[i, j].getCharCase());
+                }
             }
         }
     }

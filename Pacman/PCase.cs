@@ -10,11 +10,11 @@ namespace Pacman
     {
         protected string statement;
 
-        PCase() {
+        public PCase() {
             this.statement = "toeat";
         }
 
-        PCase(string statement) {
+        public PCase(string statement) {
             this.statement = statement;
         }
 
@@ -54,6 +54,12 @@ namespace Pacman
                 case "Ghost":
                     {
                         return 'G';
+                    }
+                    break;
+
+                case "nextLine":
+                    {
+                        return '\n';
                     }
                     break;
 
