@@ -1,0 +1,6 @@
+c:\users\martin\documents\visual studio 2012\Projects\Pacman\Pacman\bin\Debug\Pacman.exe.config
+c:\users\martin\documents\visual studio 2012\Projects\Pacman\Pacman\bin\Debug\Pacman.exe
+c:\users\martin\documents\visual studio 2012\Projects\Pacman\Pacman\bin\Debug\Pacman.pdb
+c:\users\martin\documents\visual studio 2012\Projects\Pacman\Pacman\obj\Debug\Pacman.csprojResolveAssemblyReference.cache
+c:\users\martin\documents\visual studio 2012\Projects\Pacman\Pacman\obj\Debug\Pacman.exe
+c:\users\martin\documents\visual studio 2012\Projects\Pacman\Pacman\obj\Debug\Pacman.pdb
