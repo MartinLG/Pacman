@@ -8,53 +8,68 @@ namespace Pacman
 {
     class Character
     {
-        protected int x;
-        protected int y;
+        public int x;
+        public int y;
+        public String name;
 
-        public bool move(string dir, Labyrinthe laby) { 
-            
-            switch (dir){
-                case "top":
-                {
-                    if(0 == dir.CompareTo("top") && laby.allowToGo(x, y-1)){
-                        y--;
-                        return true;
-                    }
-                }
-                break;
-                case "bottom":
-                {
-                    if (0 == dir.CompareTo("bottom") && laby.allowToGo(x, y + 1))
+        public void setPlace(Labyrinthe level) {
+            level.laby[x,y].setStatement(name);
+        }
+
+        public void move(ConsoleKey key, Labyrinthe laby) {
+            switch (key) {
+                case ConsoleKey.UpArrow:
                     {
-                        y++;
-                        return true;
+                        if (laby.allowToGo(x - 1, y)) {
+                            
+                            x--;
+                            if (name == "pacman" && laby.toEat(x + 1, y))
+                            {
+                                laby.eatGum(x + 1, y);
+                            }
+                        }
                     }
-                }
-                break;
-                case "right":
-                {
-                    if (0 == dir.CompareTo("right") && laby.allowToGo(x + 1, y))
+                    break;
+                case ConsoleKey.DownArrow:
                     {
-                        x++;
-                        return true;
+                        if (laby.allowToGo(x + 1, y))
+                        {
+                            x++;
+                            if (name == "pacman" && laby.toEat(x - 1, y))
+                            {
+                                laby.eatGum(x - 1, y);
+                            }
+                        }
                     }
-                }
-                break;
-                case "left":
-                {
-                    if (0 == dir.CompareTo("bottom") && laby.allowToGo(x - 1, y))
+                    break;
+                case ConsoleKey.RightArrow:
                     {
-                        x--;
-                        return true;
+                        if (laby.allowToGo(x, y + 1))
+                        {
+                            y++;
+                            if (name == "pacman" && laby.toEat(x, y - 1))
+                            {
+                                laby.eatGum(x, y - 1);
+                            }
+                        }
                     }
-                }
-                break;
-                default:
-                {
-                    return false;
-                }
+                    break;
+                case ConsoleKey.LeftArrow:
+                    {
+                        if (laby.allowToGo(x, y - 1))
+                        {
+                            y--;
+                            if (name == "pacman" && laby.toEat(x, y + 1))
+                            {
+                                laby.eatGum(x, y + 1);
+                            }
+                        }
+                    }
+                    break;
+                default: { } break;
             }
-            return false;
+
+            setPlace(laby);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Pacman
 {
     class Labyrinthe
     {
-        private PCase[,] laby = new PCase[20,21];
+        public PCase[,] laby = new PCase[20,21];
 
         public Labyrinthe(){
             for(int i=0; i<20; i++){
@@ -22,18 +22,12 @@ namespace Pacman
                     }else{
                         laby[i,j] = new PCase();
                         laby[i,j].setStatement("toeat");
+                        laby[i, j].eatable = true;
                     }
                 }
                 laby[i,20] = new PCase();
                 laby[i, 20].setStatement("nextLine");
             }
-            //laby[10, 10].setStatement("pacman");
-        }
-
-        public void checkCollision(int x, int y){
-            laby[x,y].eatGum();
-            laby[x,y].allowToGo();
-
         }
 
         public bool allowToGo(int x, int y) {
@@ -46,17 +40,26 @@ namespace Pacman
             }
         }
 
-        public void setCharacterOnCase(Character character, int x, int y) { 
-            
-        }
-
         public void printLaby() {
+            Console.Clear();
             for (int i = 0; i < 20; i++)
             {
                 for (int j = 0; j < 21; j++) {
                     Console.Write(laby[i, j].getCharCase());
                 }
             }
+        }
+
+        public void setCharacterPlace(Character character) {
+            laby[character.x, character.y].setStatement(character.name);
+        }
+
+        public void eatGum(int x, int y) { 
+            laby[x,y].setStatement("eated");
+        }
+
+        public bool toEat(int x, int y) {
+            return(laby[x, y].eatable);
         }
     }
 }

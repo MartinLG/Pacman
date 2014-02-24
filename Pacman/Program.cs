@@ -10,9 +10,20 @@ namespace Pacman
     {
         static void Main(string[] args)
         {
+            ConsoleKeyInfo cki;
+            Console.TreatControlCAsInput = true;
+
             Labyrinthe laby = new Labyrinthe();
+            Pacman pacman = new Pacman();
+            pacman.setPlace(laby);
             laby.printLaby();
-            Console.ReadKey(true);
+
+            do
+            {
+                cki = Console.ReadKey();
+                pacman.move(cki.Key, laby);
+                laby.printLaby();
+            } while (cki.Key != ConsoleKey.Escape);
         }
     }
 }

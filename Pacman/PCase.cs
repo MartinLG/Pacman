@@ -9,13 +9,18 @@ namespace Pacman
     class PCase
     {
         protected string statement;
+        public bool eatable;
 
         public PCase() {
             this.statement = "toeat";
+            this.eatable = true;
         }
 
-        public PCase(string statement) {
+        PCase(string statement) {
             this.statement = statement;
+            if (statement == "toeat") {
+                this.eatable = true;
+            }
         }
 
         public char getCharCase() {
@@ -25,54 +30,50 @@ namespace Pacman
                     {
                         return ' ';
                     }
-                    break;
 
                 case "toeat":
                     {
                         return '.';
                     }
-                    break;
 
                 case "vertical":
                     {
                         return '|';
                     }
-                    break;
 
                 case "horizontal":
                     {
                         return '_';
                     }
-                    break;
 
                 case "pacman":
                     {
                         return 'C';
                     }
-                    break;
 
                 case "Ghost":
                     {
                         return 'G';
                     }
-                    break;
 
                 case "nextLine":
                     {
                         return '\n';
                     }
-                    break;
 
                 default:
                     {
                         return ' ';
                     }
-                    break;
             }
         }
 
         public void setStatement(string statement){
             this.statement = statement;
+            if (statement == "toeat")
+            {
+                eatable = true;
+            }
         }
         
         public string getStatement() {
@@ -101,16 +102,5 @@ namespace Pacman
                     break;
             }
         }
-
-        public bool eatGum() {
-            if(statement.CompareTo("toeat") == 0){
-                setStatement("eated");
-                // increase score
-                return true;
-            }
-            return false;
-        }
-
-        
     }
 }
