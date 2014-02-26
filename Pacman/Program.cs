@@ -13,7 +13,8 @@ namespace Pacman
             ConsoleKeyInfo cki;
             Console.TreatControlCAsInput = true;
 
-            Labyrinthe laby = new Labyrinthe();
+            Levels level1 = new Levels();
+            Labyrinthe laby = new Labyrinthe(level1.level1);
             Pacman pacman = new Pacman();
             pacman.setPlace(laby);
             laby.printLaby();

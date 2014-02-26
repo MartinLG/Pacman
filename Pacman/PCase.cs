@@ -36,6 +36,11 @@ namespace Pacman
                         return '.';
                     }
 
+                case "supercandy":
+                    {
+                        return '*';
+                    }
+
                 case "vertical":
                     {
                         return '|';
@@ -44,6 +49,21 @@ namespace Pacman
                 case "horizontal":
                     {
                         return '_';
+                    }
+
+                case "small-horizontal":
+                    {
+                        return '-';
+                    }
+
+                case "biais1":
+                    {
+                        return '/';
+                    }
+
+                case "biais2":
+                    {
+                        return '\\';
                     }
 
                 case "pacman":
@@ -87,19 +107,69 @@ namespace Pacman
                     {
                         return false;
                     }
-                    break;
+                    
 
                 case "horizontal":
                     {
                         return false;
                     }
-                    break;
+                    
+
+                case "small-horizontal":
+                    {
+                        return false;
+                    }
+                    
+
+                case "biais1":
+                    {
+                        return false;
+                    }
+                    
+
+                case "biais2":
+                    {
+                        return false;
+                    }
+                    
 
                 default:
                     {
                         return true;
                     }
-                    break;
+                    
+            }
+        }
+
+        public void setStatementFromChar(char statechar)
+        {
+            switch (statechar) {
+                case '_': {
+                    statement = "horizontal";
+                } break;
+                case '-': {
+                    statement = "small-horizontal";
+                } break;
+                case '|': {
+                    statement = "vertical";
+                } break;
+                case '.': {
+                    statement = "toeat";
+                    eatable = true;
+                } break;
+                case '*': {
+                    statement = "supercandy";
+                    eatable = true;
+                } break;
+                case '/': {
+                    statement = "biais1";
+                } break;
+                case '\\': {
+                    statement = "biais2";
+                } break;
+                default: {
+                    statement = "eated";
+                } break;
             }
         }
     }

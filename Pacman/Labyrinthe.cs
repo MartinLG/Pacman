@@ -4,19 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Pacman
 {
     class Labyrinthe
     {
-        public PCase[,] laby = new PCase[20,21];
+        public PCase[,] laby = new PCase[22,20];
 
         public Labyrinthe(){
-            for(int i=0; i<20; i++){
-                for(int j=0; j<20; j++){
-                    if(i==0 || i==19){
+            for(int i=0; i<22; i++){
+                for(int j=0; j<19; j++){
+                    if(i==0 || i==21){
                         laby[i,j] = new PCase();
                         laby[i,j].setStatement("horizontal");
-                    }else if(j==0 || j == 19){
+                    }else if(j==0 || j == 18){
                         laby[i,j] = new PCase();
                         laby[i,j].setStatement("vertical");
                     }else{
@@ -25,8 +26,22 @@ namespace Pacman
                         laby[i, j].eatable = true;
                     }
                 }
-                laby[i,20] = new PCase();
-                laby[i, 20].setStatement("nextLine");
+                laby[i, 19] = new PCase();
+                laby[i, 19].setStatement("nextLine");
+            }
+        }
+
+        public Labyrinthe(char[,] level)
+        {
+            for (int i = 0; i < 22; i++)
+            {
+                for (int j = 0; j < 19; j++)
+                {
+                    laby[i, j] = new PCase();
+                    laby[i, j].setStatementFromChar(level[i, j]);
+                }
+                laby[i, 19] = new PCase();
+                laby[i, 19].setStatement("nextLine");
             }
         }
 
@@ -42,9 +57,9 @@ namespace Pacman
 
         public void printLaby() {
             Console.Clear();
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 22; i++)
             {
-                for (int j = 0; j < 21; j++) {
+                for (int j = 0; j < 20; j++) {
                     Console.Write(laby[i, j].getCharCase());
                 }
             }
