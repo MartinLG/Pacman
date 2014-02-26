@@ -17,13 +17,13 @@ namespace Pacman
             Labyrinthe laby = new Labyrinthe(level1.level1);
             Pacman pacman = new Pacman();
             pacman.setPlace(laby);
-            laby.printLaby();
+            laby.printLaby(pacman);
 
             do
             {
                 cki = Console.ReadKey();
                 pacman.move(cki.Key, laby);
-                laby.printLaby();
+                laby.printLaby(pacman);
             } while (cki.Key != ConsoleKey.Escape);
         }
     }

@@ -10,6 +10,7 @@ namespace Pacman
     class Labyrinthe
     {
         public PCase[,] laby = new PCase[22,20];
+        public int nbGums = 189;
 
         public Labyrinthe(){
             for(int i=0; i<22; i++){
@@ -55,7 +56,7 @@ namespace Pacman
             }
         }
 
-        public void printLaby() {
+        public void printLaby(Pacman pacman) {
             Console.Clear();
             for (int i = 0; i < 22; i++)
             {
@@ -63,6 +64,8 @@ namespace Pacman
                     Console.Write(laby[i, j].getCharCase());
                 }
             }
+            Console.WriteLine("Points = " + pacman.points);
+            Console.WriteLine("Lifes = " + pacman.life + ", Gums = " + nbGums);
         }
 
         public void setCharacterPlace(Character character) {
@@ -71,10 +74,17 @@ namespace Pacman
 
         public void eatGum(int x, int y) { 
             laby[x,y].setStatement("eated");
+            laby[x, y].eatable = false;
         }
 
         public bool toEat(int x, int y) {
             return(laby[x, y].eatable);
+        }
+
+        public void endGame() {
+            Console.Clear();
+            Console.WriteLine("  YOU WIN !!!!   ");
+            Console.ReadLine();
         }
     }
 }
