@@ -16,15 +16,11 @@ namespace Pacman
             for(int i=0; i<22; i++){
                 for(int j=0; j<19; j++){
                     if(i==0 || i==21){
-                        laby[i,j] = new PCase();
-                        laby[i,j].setStatement("horizontal");
+                        laby[i,j] = new PCase("horizontal");
                     }else if(j==0 || j == 18){
-                        laby[i,j] = new PCase();
-                        laby[i,j].setStatement("vertical");
+                        laby[i,j] = new PCase("vertical");
                     }else{
-                        laby[i,j] = new PCase();
-                        laby[i,j].setStatement("toeat");
-                        laby[i, j].eatable = true;
+                        laby[i,j] = new PCase("toeat");
                     }
                 }
                 laby[i, 19] = new PCase();
@@ -41,8 +37,7 @@ namespace Pacman
                     laby[i, j] = new PCase();
                     laby[i, j].setStatementFromChar(level[i, j]);
                 }
-                laby[i, 19] = new PCase();
-                laby[i, 19].setStatement("nextLine");
+                laby[i, 19] = new PCase("nextLine");
             }
         }
 
@@ -65,7 +60,7 @@ namespace Pacman
                 }
             }
             Console.WriteLine("Points = " + pacman.points);
-            Console.WriteLine("Lifes = " + pacman.life + ", Gums = " + nbGums);
+            Console.WriteLine("Lifes = " + pacman.life);
         }
 
         public void setCharacterPlace(Character character) {

@@ -10,13 +10,14 @@ namespace Pacman
     {
         protected string statement;
         public bool eatable;
+        protected string previous_statement;
 
         public PCase() {
             this.statement = "toeat";
             this.eatable = true;
         }
 
-        PCase(string statement) {
+        public PCase(string statement) {
             this.statement = statement;
             if (statement == "toeat") {
                 this.eatable = true;
@@ -71,7 +72,7 @@ namespace Pacman
                         return 'C';
                     }
 
-                case "Ghost":
+                case "ghost":
                     {
                         return 'G';
                     }
@@ -89,6 +90,7 @@ namespace Pacman
         }
 
         public void setStatement(string statement){
+            previous_statement = this.statement;
             this.statement = statement;
             if (statement == "toeat" || statement == "supercandy")
             {
@@ -171,6 +173,10 @@ namespace Pacman
                     statement = "eated";
                 } break;
             }
+        }
+
+        public void rollbackStatement() {
+            statement = previous_statement;
         }
     }
 }
