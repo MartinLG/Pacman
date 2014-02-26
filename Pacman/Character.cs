@@ -44,7 +44,11 @@ namespace Pacman
                     break;
                 case ConsoleKey.RightArrow:
                     {
-                        if (laby.allowToGo(x, y + 1))
+                        if (x == 10 && y == 18) 
+                        {
+                            y = 0;
+                            laby.laby[10, 18].setStatement("eated");
+                        }else if (laby.allowToGo(x, y + 1))
                         {
                             y++;
                             if (name == "pacman" && laby.toEat(x, y - 1))
@@ -56,7 +60,11 @@ namespace Pacman
                     break;
                 case ConsoleKey.LeftArrow:
                     {
-                        if (laby.allowToGo(x, y - 1))
+                        if (x == 10 && y == 0)
+                        {
+                            y = 18;
+                            laby.laby[10, 0].setStatement("eated");
+                        }else if (laby.allowToGo(x, y - 1))
                         {
                             y--;
                             if (name == "pacman" && laby.toEat(x, y + 1))

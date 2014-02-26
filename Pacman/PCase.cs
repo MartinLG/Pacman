@@ -90,7 +90,7 @@ namespace Pacman
 
         public void setStatement(string statement){
             this.statement = statement;
-            if (statement == "toeat")
+            if (statement == "toeat" || statement == "supercandy")
             {
                 eatable = true;
             }

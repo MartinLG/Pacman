@@ -15,8 +15,8 @@ namespace Pacman
         public Pacman() {
             life = 3;
             points = 0;
-            x = 10;
-            y = 10;
+            x = 12;
+            y = 9;
             name = "pacman";
             super = false;
         }
