@@ -31,83 +31,102 @@ namespace Pacman
             y = 9;
         }
 
-        public string GetDirection()
-        {
-            string dir;
-            int n = random_number.Next(10);
-            switch (n) {
-                case 0: dir = "continue"; break;
-                case 1: dir = "continue"; break;
-                case 2: dir = "continue"; break;
-                case 3: dir = "continue"; break;
-                case 4: dir = "continue"; break;
-                case 5: dir = "back"; break;
-                case 6: dir = "turnsright"; break;
-                case 7: dir = "turnsright"; break;
-                case 8: dir = "turnsleft"; break;
-                case 9: dir = "turnsleft"; break;
-                default: dir = "continue"; break;
-            }
-            return(dir);
-        }
-
-
-        public void move(Labyrinthe laby) {
-            switch (GetDirection()) {
-                case "continue":
+        public string convertDir(string relativeDir) {
+            switch (previous_dir) {
+                case "top": 
+                    { 
+                        switch (relativeDir)
+                        {
+                            case "forward": 
+                                {
+                                    return "top";
+                                }
+                            case "backward":
+                                {
+                                    return "bottom";
+                                }
+                            case "turnsright":
+                                {
+                                    return "right";
+                                }
+                            case "turnsleft":
+                                {
+                                    return "left";
+                                }
+                            default: return "top";
+                        }
+                    }
+                case "bottom":
                     {
-                        tryContinue(laby);
-                    }break;
-                case "back":
+                        switch (relativeDir)
+                        {
+                            case "forward":
+                                {
+                                    return "bottom";
+                                }
+                            case "backward":
+                                {
+                                    return "top";
+                                }
+                            case "turnsright":
+                                {
+                                    return "left";
+                                }
+                            case "turnsleft":
+                                {
+                                    return "right";
+                                }
+                            default: return "bottom";
+                        }
+                    }
+                case "right":
                     {
-                        tryBack(laby);
-                    }break;
-                case "turnsright":
+                        switch (relativeDir)
+                        {
+                            case "forward":
+                                {
+                                    return "right";
+                                }
+                            case "backward":
+                                {
+                                    return "left";
+                                }
+                            case "turnsright":
+                                {
+                                    return "bottom";
+                                }
+                            case "turnsleft":
+                                {
+                                    return "top";
+                                }
+                            default: return "right";
+                        }
+                    }
+                case "left":
                     {
-                        tryTurnsRight(laby);
-                    } break;
-                case "turnsleft":
-                    {
-                        tryTurnsLeft(laby);
-                    } break;
+                        switch (relativeDir)
+                        {
+                            case "forward":
+                                {
+                                    return "left";
+                                }
+                            case "backward":
+                                {
+                                    return "right";
+                                }
+                            case "turnsright":
+                                {
+                                    return "top";
+                                }
+                            case "turnsleft":
+                                {
+                                    return "bottom";
+                                }
+                            default: return "left";
+                        }
+                    }
+                default: return "top";
             }
-            setPlace(laby);
-        }
-
-        private void tryContinue(Labyrinthe laby) 
-        {
-            if (allowedDir(laby, previous_dir))
-            {
-                takeDirection(laby, previous_dir);
-            }
-            else tryTurnsRight(laby);
-        }
-
-        private void tryBack(Labyrinthe laby)
-        {
-            if (allowedDir(laby, "bottom"))
-            {
-                takeDirection(laby, "bottom");
-            }
-            else tryContinue(laby);
-        }
-
-        private void tryTurnsRight(Labyrinthe laby)
-        {
-            if (allowedDir(laby, "right"))
-            {
-                takeDirection(laby, "right");
-            }
-            else tryTurnsLeft(laby);
-        }
-
-        private void tryTurnsLeft(Labyrinthe laby)
-        {
-            if (allowedDir(laby, "left"))
-            {
-                takeDirection(laby, "left");
-            }
-            else tryContinue(laby);
         }
 
         private bool allowedDir(Labyrinthe laby ,string dir) 
@@ -116,8 +135,8 @@ namespace Pacman
             { 
                 case "top": return (laby.allowToGo(x - 1, y));
                 case "bottom": return (laby.allowToGo(x + 1, y));
-                case "right": return (laby.allowToGo(x, y + 1));
-                case "left": return (laby.allowToGo(x, y - 1));
+                case "right": { if (x == 10 && y == 18) return true; else return (laby.allowToGo(x, y + 1)); }
+                case "left": { if (x == 10 && y == 0) return true; else return (laby.allowToGo(x, y - 1)); }
                 default: return false;
             }
         }
@@ -154,6 +173,73 @@ namespace Pacman
                 }break;
             }
             previous_dir = dir;
+        }
+
+        private string[] dirToCheck() {
+            switch (previous_dir) { 
+                case "top": return (new string[3] { "top", "right", "left" });
+                case "bottom": return (new string[3] { "bottom", "right", "left" });
+                case "right": return (new string[3] { "bottom", "top", "right" });
+                case "left": return (new string[3] { "bottom", "left", "top" });
+                default: return (new string[3] { "top", "right", "left" });
+            }
+        }
+
+        public void move(Labyrinthe laby) {
+            int num_dir;
+            int indexRandom = 0;
+            bool forwardPossible = false;
+            bool turnsrightPossible = false;
+            bool turnsleftPossible = false;
+            foreach (string dirtocheck in dirToCheck()) {
+                if (allowedDir(laby, dirtocheck))
+                {
+                    if (0 == dirtocheck.CompareTo(convertDir("forward")))
+                    {
+                        indexRandom += 2;
+                        forwardPossible = true;
+                    }
+                    else if (0 == dirtocheck.CompareTo(convertDir("turnsright")))
+                    {
+                        indexRandom += 1;
+                        turnsrightPossible = true;
+                    }
+                    else if (0 == dirtocheck.CompareTo(convertDir("turnsleft")))
+                    {
+                        indexRandom += 1;
+                        turnsleftPossible = true;
+                    } 
+                }
+            }
+
+            num_dir = randomNumber(indexRandom);
+            if (forwardPossible && num_dir <= 1) {
+                takeDirection(laby, convertDir("forward"));
+            }
+            else if (forwardPossible && turnsleftPossible && turnsrightPossible) {
+                if (num_dir == 2) takeDirection(laby, convertDir("turnsright"));
+                if (num_dir == 3) takeDirection(laby, convertDir("turnsleft"));
+            }
+            else if (!forwardPossible && turnsrightPossible && turnsleftPossible) {
+                if (num_dir == 0) takeDirection(laby, convertDir("turnsright"));
+                if (num_dir == 1) takeDirection(laby, convertDir("turnsleft"));
+            }
+            else if (!forwardPossible && !turnsleftPossible) {
+                takeDirection(laby, convertDir("turnsright"));
+            }
+            else if (!forwardPossible && !turnsrightPossible)
+            {
+                takeDirection(laby, convertDir("turnsleft"));
+            }
+
+            setPlace(laby);
+        }
+
+
+        public int randomNumber(int limit)
+        {
+            int n = random_number.Next(limit);
+            return n;
         }
 
     }
