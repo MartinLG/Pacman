@@ -90,7 +90,7 @@ namespace Pacman
         }
 
         public void setStatement(string statement){
-            previous_statement = this.statement;
+            if (this.statement != "ghost") {previous_statement = this.statement;}
             this.statement = statement;
             if (statement == "toeat" || statement == "supercandy")
             {
