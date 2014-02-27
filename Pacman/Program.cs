@@ -28,10 +28,10 @@ namespace Pacman
             {
                 cki = Console.ReadKey();
                 pacman.move(cki.Key, laby);
-                ghost1.move(laby);
-                ghost2.move(laby);
-                ghost3.move(laby);
-                ghost4.move(laby);
+                ghost1.move(laby, pacman);
+                ghost2.move(laby, pacman);
+                ghost3.move(laby, pacman);
+                ghost4.move(laby, pacman);
                 laby.printLaby(pacman);
                 
             } while (cki.Key != ConsoleKey.Escape);

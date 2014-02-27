@@ -185,7 +185,7 @@ namespace Pacman
             }
         }
 
-        public void move(Labyrinthe laby)
+        public void move(Labyrinthe laby, Pacman pacman)
         {
             int num_dir;
             int indexRandom = 0;
@@ -240,6 +240,16 @@ namespace Pacman
                     takeDirection(laby, convertDir("turnsleft"));
                 }
 
+                if (x == pacman.x && y == pacman.y) {
+                    if (pacman.super)
+                    {
+                        death(pacman);
+                    }
+                    else {
+                        pacman.death(laby);
+                    }
+                }
+
                 setPlace(laby);
             }
             else {
@@ -250,6 +260,12 @@ namespace Pacman
                     y = 9;
                 }
             }
+        }
+
+        private void death(Pacman pacman) {
+            pacman.points += 100;
+            alive = false;
+            respawn_time = 10;
         }
 
 

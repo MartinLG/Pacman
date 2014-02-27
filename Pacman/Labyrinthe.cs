@@ -81,5 +81,11 @@ namespace Pacman
             Console.WriteLine("  YOU WIN !!!!   ");
             Console.ReadLine();
         }
+
+        public void gameOver() {
+            Console.Clear();
+            Console.WriteLine("  YOU LOSE !!!!   ");
+            Console.ReadLine();
+        }
     }
 }

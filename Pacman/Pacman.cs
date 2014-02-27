@@ -11,9 +11,10 @@ namespace Pacman
         public int life;
         public int points;
         public bool super;
+        public int super_time;
 
         public Pacman() {
-            life = 3;
+            life = 2;
             points = 0;
             name = "pacman";
             x = 12;
@@ -23,6 +24,14 @@ namespace Pacman
 
         public override void move(ConsoleKey key, Labyrinthe laby)
         {
+            if (super) {
+                super_time--;
+            }
+
+            if (super_time == 0) {
+                super = false;
+            }
+
             switch (key)
             {
                 case ConsoleKey.UpArrow:
@@ -37,6 +46,10 @@ namespace Pacman
                                 
                                 points += 100;
                                 laby.nbGums--;
+                                if (laby.laby[x, y].getStatement().CompareTo("supercandy") == 0) {
+                                    super = true;
+                                    super_time = 15;
+                                }
                             }
                             laby.eatGum(x + 1, y);
                         }
@@ -53,6 +66,11 @@ namespace Pacman
                                 
                                 points += 100;
                                 laby.nbGums--;
+                                if (laby.laby[x, y].getStatement().CompareTo("supercandy") == 0)
+                                {
+                                    super = true;
+                                    super_time = 15;
+                                }
                             }
                             laby.eatGum(x - 1, y);
                         }
@@ -74,6 +92,11 @@ namespace Pacman
                                 
                                 points += 100;
                                 laby.nbGums--;
+                                if (laby.laby[x, y].getStatement().CompareTo("supercandy") == 0)
+                                {
+                                    super = true;
+                                    super_time = 15;
+                                }
                             }
                             laby.eatGum(x, y - 1);
                         }
@@ -95,6 +118,11 @@ namespace Pacman
                                 
                                 points += 100;
                                 laby.nbGums--;
+                                if (laby.laby[x, y].getStatement().CompareTo("supercandy") == 0)
+                                {
+                                    super = true;
+                                    super_time = 15;
+                                }
                             }
                             laby.eatGum(x, y + 1);
                         }
@@ -109,6 +137,19 @@ namespace Pacman
             }
 
             setPlace(laby);
+        }
+
+        public void death(Labyrinthe laby) {
+            if (life > 0)
+            {
+                life--;
+                laby.laby[x, y].setStatement("eated");
+                x = 12;
+                y = 9;
+            }
+            else if (life == 0) {
+                laby.gameOver();
+            }
         }
 
     }
