@@ -185,54 +185,71 @@ namespace Pacman
             }
         }
 
-        public void move(Labyrinthe laby) {
+        public void move(Labyrinthe laby)
+        {
             int num_dir;
             int indexRandom = 0;
             bool forwardPossible = false;
             bool turnsrightPossible = false;
             bool turnsleftPossible = false;
-            foreach (string dirtocheck in dirToCheck()) {
-                if (allowedDir(laby, dirtocheck))
+            if (alive)
+            {
+                foreach (string dirtocheck in dirToCheck())
                 {
-                    if (0 == dirtocheck.CompareTo(convertDir("forward")))
+                    if (allowedDir(laby, dirtocheck))
                     {
-                        indexRandom += 2;
-                        forwardPossible = true;
+                        if (0 == dirtocheck.CompareTo(convertDir("forward")))
+                        {
+                            indexRandom += 2;
+                            forwardPossible = true;
+                        }
+                        else if (0 == dirtocheck.CompareTo(convertDir("turnsright")))
+                        {
+                            indexRandom += 1;
+                            turnsrightPossible = true;
+                        }
+                        else if (0 == dirtocheck.CompareTo(convertDir("turnsleft")))
+                        {
+                            indexRandom += 1;
+                            turnsleftPossible = true;
+                        }
                     }
-                    else if (0 == dirtocheck.CompareTo(convertDir("turnsright")))
-                    {
-                        indexRandom += 1;
-                        turnsrightPossible = true;
-                    }
-                    else if (0 == dirtocheck.CompareTo(convertDir("turnsleft")))
-                    {
-                        indexRandom += 1;
-                        turnsleftPossible = true;
-                    } 
+                }
+
+                num_dir = randomNumber(indexRandom);
+                if (forwardPossible && num_dir <= 1)
+                {
+                    takeDirection(laby, convertDir("forward"));
+                }
+                else if (forwardPossible && turnsleftPossible && turnsrightPossible)
+                {
+                    if (num_dir == 2) takeDirection(laby, convertDir("turnsright"));
+                    if (num_dir == 3) takeDirection(laby, convertDir("turnsleft"));
+                }
+                else if (!forwardPossible && turnsrightPossible && turnsleftPossible)
+                {
+                    if (num_dir == 0) takeDirection(laby, convertDir("turnsright"));
+                    if (num_dir == 1) takeDirection(laby, convertDir("turnsleft"));
+                }
+                else if (!forwardPossible && !turnsleftPossible)
+                {
+                    takeDirection(laby, convertDir("turnsright"));
+                }
+                else if (!forwardPossible && !turnsrightPossible)
+                {
+                    takeDirection(laby, convertDir("turnsleft"));
+                }
+
+                setPlace(laby);
+            }
+            else {
+                respawn_time--;
+                if (respawn_time == 0) {
+                    alive = true;
+                    x = 10;
+                    y = 9;
                 }
             }
-
-            num_dir = randomNumber(indexRandom);
-            if (forwardPossible && num_dir <= 1) {
-                takeDirection(laby, convertDir("forward"));
-            }
-            else if (forwardPossible && turnsleftPossible && turnsrightPossible) {
-                if (num_dir == 2) takeDirection(laby, convertDir("turnsright"));
-                if (num_dir == 3) takeDirection(laby, convertDir("turnsleft"));
-            }
-            else if (!forwardPossible && turnsrightPossible && turnsleftPossible) {
-                if (num_dir == 0) takeDirection(laby, convertDir("turnsright"));
-                if (num_dir == 1) takeDirection(laby, convertDir("turnsleft"));
-            }
-            else if (!forwardPossible && !turnsleftPossible) {
-                takeDirection(laby, convertDir("turnsright"));
-            }
-            else if (!forwardPossible && !turnsrightPossible)
-            {
-                takeDirection(laby, convertDir("turnsleft"));
-            }
-
-            setPlace(laby);
         }
 
 

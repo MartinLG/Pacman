@@ -17,6 +17,9 @@ namespace Pacman
             Labyrinthe laby = new Labyrinthe(level1.level1);
             Pacman pacman = new Pacman();
             Ghost ghost1 = new Ghost();
+            Ghost ghost2 = new Ghost(10);
+            Ghost ghost3 = new Ghost(20);
+            Ghost ghost4 = new Ghost(30);
             pacman.setPlace(laby);
             ghost1.setPlace(laby);
             laby.printLaby(pacman);
@@ -26,6 +29,9 @@ namespace Pacman
                 cki = Console.ReadKey();
                 pacman.move(cki.Key, laby);
                 ghost1.move(laby);
+                ghost2.move(laby);
+                ghost3.move(laby);
+                ghost4.move(laby);
                 laby.printLaby(pacman);
                 
             } while (cki.Key != ConsoleKey.Escape);
