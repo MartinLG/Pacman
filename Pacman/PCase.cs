@@ -42,6 +42,11 @@ namespace Pacman
                         return '*';
                     }
 
+                case "superhero":
+                    {
+                        return 'S';
+                    }
+
                 case "vertical":
                     {
                         return '|';

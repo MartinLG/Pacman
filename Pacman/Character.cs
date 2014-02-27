@@ -12,7 +12,7 @@ namespace Pacman
         public int y;
         public string name;
 
-        public void setPlace(Labyrinthe level) {
+        public virtual void setPlace(Labyrinthe level) {
             level.laby[x,y].setStatement(name);
         }
 

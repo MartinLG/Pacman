@@ -152,5 +152,15 @@ namespace Pacman
             }
         }
 
+        public override void setPlace(Labyrinthe level)
+        {
+            if(super)
+            {
+                level.laby[x, y].setStatement("superhero");
+            }else{
+                base.setPlace(level);
+            }
+        }
+
     }
 }
